@@ -1,6 +1,6 @@
 type GraphNode = {
   index: number,
-  name?: string,
+  name: string,
   [key: string]: any
 }
 
@@ -23,7 +23,8 @@ class Graph {
     if (inputMatrix != null){
       for (let i = 0; i < inputMatrix.length; i++){
         let node: GraphNode = {
-          index: i
+          index: i,
+          name: i + ''
         }
         this.nodes.push(node);
       }
@@ -46,21 +47,28 @@ class Graph {
   } 
   
   print = (adjMatrix: boolean = true, adjList: boolean = false, edgeList: boolean = false) => {
+    console.log("Graph:");
     if (adjMatrix){
       console.log(this.adjMatrix);
     }
-    if (adjList || edgeList){
+    if (adjList){
       for (let i = 0; i < this.adjList.length; i++){
-        if (adjList){
-          console.log(('name' in this.nodes[i]) ? this.nodes[i].name : i, this.adjList[i])
-        }
-        if (edgeList){
-          for (let j = 0; j < this.adjList[i].length; j++){
-            let pair = [('name' in this.nodes[i]) ? this.nodes[i].name : i, ('name' in this.nodes[j]) ? this.nodes[j].name : j]
-            console.log(pair);
-          }
+        console.log(this.nodes[i].name, this.adjList[i])
+      }
+    }
+    if (edgeList){
+      for (let i = 0; i < this.adjList.length; i++){
+        for (let j = 0; j < this.adjList[i].length; j++){
+          let pair = [this.nodes[i].name, this.nodes[j].name]
+          console.log(pair);
         }
       }
     }
   }
+}
+
+export default Graph;
+export type {
+  GraphNode,
+  GraphEdge
 }
